@@ -1,0 +1,24 @@
+version: '3'
+services:
+  container1:
+    image: httpd
+    ports:
+      - "8080:80"
+    container_name: container1
+    volumes:
+      - ./container1.html:/usr/local/apache2/htdocs/index.html
+  container2:
+    image: httpd
+    ports:
+      - "8081:80"
+    container_name: container2
+    volumes:
+      - ./container2.html:/usr/local/apache2/htdocs/index.html
+  haproxy:
+    image: haproxy
+    ports:
+      - "80:80"
+      - "1936:1936"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    command: haproxy -f /usr/local/etc/haproxy/haproxy.cfg
